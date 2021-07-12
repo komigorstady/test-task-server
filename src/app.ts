@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import path from 'path';
+import fileUpload from 'express-fileupload';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -16,6 +17,7 @@ const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.resolve(__dirname, 'static')));
+app.use(fileUpload({}))
 
 app.use('/', router);
 

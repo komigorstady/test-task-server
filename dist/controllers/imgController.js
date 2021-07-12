@@ -14,11 +14,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const apiService_1 = __importDefault(require("../service/apiService"));
 class ImgController {
-    dogUpload(req, res, next) {
+    dogUpload(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let randomDogImmage = yield apiService_1.default.getDogApi();
-                console.log(randomDogImmage);
+                console.dir(yield apiService_1.default.getDogApi());
+                return res.send('Everything is ok');
             }
             catch (err) {
             }

@@ -13,19 +13,20 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
+const path_1 = __importDefault(require("path"));
 class ApiService {
     getDogApi() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const result = yield axios_1.default.get('https://random.dog/woof.json');
                 const posts = result.data;
-                const format = posts.url.substr(posts.url.length - 4);
+                const format = path_1.default.extname(posts.url);
+                console.log(format);
                 if (format != '.jpg') {
-                    this.getDogApi();
+                    return this.getDogApi();
                 }
-                else {
-                    return posts;
-                }
+                console.log(posts);
+                return posts;
             }
             catch (err) {
                 return null;

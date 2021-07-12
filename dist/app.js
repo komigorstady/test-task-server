@@ -37,32 +37,24 @@ const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const index_1 = __importDefault(require("./routes/index"));
 const ErrorHandlingMiddleware_1 = __importDefault(require("./middlewares/ErrorHandlingMiddleware"));
-const apiService_1 = __importDefault(require("./service/apiService"));
 const db_1 = __importDefault(require("./db"));
-const console_1 = __importDefault(require("console"));
 const PORT = process.env.PORT || 5000;
 const app = express_1.default();
 // middlewares
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.static(path_1.default.resolve(__dirname, 'static')));
-app.use('/api', index_1.default);
-function scc() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const s = yield apiService_1.default.getDogApi();
-    });
-}
-scc();
+app.use('/', index_1.default);
 app.use(ErrorHandlingMiddleware_1.default);
 function start() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield db_1.default.authenticate();
             yield db_1.default.sync();
-            app.listen(PORT, () => console_1.default.log(`Server started on port ${PORT}`));
+            app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
         }
         catch (err) {
-            console_1.default.log(err);
+            console.log(err);
         }
     });
 }

@@ -1,13 +1,16 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model, DataTypes, Optional } from 'sequelize';
 import db from '../db';
 
 interface ImgAttributes {
   id: number;
-  fileSizeBytes: number;
-  url: string;
+  imgName: string;
+  width: number;
+  height: number;
 }
 
-class Img extends Model <ImgAttributes> {}
+interface ImgCreationAttributes extends Optional<ImgAttributes, "id"> {}
+
+class Img extends Model <ImgAttributes, ImgCreationAttributes> {}
 
 Img.init({
   id: {
@@ -15,14 +18,19 @@ Img.init({
     autoIncrement: true,
     primaryKey: true,
   },
-  fileSizeBytes: {
-    type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false,
-  },
-  url: {
+  imgName: {
     type: DataTypes.STRING(128),
     allowNull: false,
   },
+  width: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+  },
+  height: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+  }
+  
 },
 {
   sequelize: db,
