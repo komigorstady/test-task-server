@@ -1,6 +1,5 @@
 import express, { Application } from 'express';
 import path from 'path';
-
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -18,7 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.resolve(__dirname, 'static')));
 
-app.use('/api', router);
+app.use('/', router);
 
 app.use(errorrHandler);
 
