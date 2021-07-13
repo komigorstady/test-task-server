@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import Jimp from 'jimp';
-import { v4 }  from 'uuid';
+import { v4 } from 'uuid';
 import Img from '../models/imgModel';
 import apiService from '../service/apiService';
-import ApiError from '../errors/ApiError'
+import ApiError from '../errors/ApiError';
 
 interface Resize {
   height: number;
@@ -17,15 +17,16 @@ interface SortParms {
 }
 
 class ImgController {
+  // eslint-disable-next-line class-methods-use-this
   async dogUpload(req: Request, res: Response, next: NextFunction) {
     try {
-      const { height , width }: Resize = req.body;    
+      const { height, width }: Resize = req.body;
       const dogImmage = await apiService.getDogApi();
-      const fileName = v4() + '.jpg'
-      const bufImage = await Jimp.read(dogImmage.url)
-      bufImage.resize(width, height).write(path.resolve(__dirname, '..' ,  'static', fileName)); // 
-      const resImage = await Img.create({imgName: fileName, width: width, height});
-      
+      const fileName = `${v4()}.jpg`;
+      const bufImage = await Jimp.read(dogImmage.url);
+      bufImage.resize(width, height).write(path.resolve(__dirname, '..', 'static', fileName)); //
+      const resImage = await Img.create({ imgName: fileName, width, height });
+
       return res.json(resImage);
     } catch (err) {
       next(ApiError.badRequest(err.message));
@@ -33,22 +34,22 @@ class ImgController {
   }
 
   async dogList(req: Request, res: Response, next: NextFunction) {
-    const { height , width }: SortParms = req.query;
-    
+    const { height, width }: SortParms = req.query;
+
     let images;
     if (height && !width) {
-      images = await Img.findAll({where:{ height }});
+      images = await Img.findAll({ where: { height } });
     }
-    if(width && !height ) {
-      images = await Img.findAll({ where:{ width}});
-    } 
-    if(width && height ) {
-      images = await Img.findAll({where:{ width, height }});
-    } 
-    if(!width && !height ) {
-      images = await Img.findAll({where:{}});
-    } 
-    res.json(images)
+    if (width && !height) {
+      images = await Img.findAll({ where: { width } });
+    }
+    if (width && height) {
+      images = await Img.findAll({ where: { width, height } });
+    }
+    if (!width && !height) {
+      images = await Img.findAll({ where: {} });
+    }
+    res.json(images);
   }
 }
 

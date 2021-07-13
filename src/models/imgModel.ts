@@ -8,7 +8,7 @@ interface ImgAttributes {
   height: number;
 }
 
-interface ImgCreationAttributes extends Optional<ImgAttributes, "id"> {}
+type ImgCreationAttributes = Optional<ImgAttributes, 'id'>;
 
 class Img extends Model <ImgAttributes, ImgCreationAttributes> {}
 
@@ -29,8 +29,8 @@ Img.init({
   height: {
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
-  }
-  
+  },
+
 },
 {
   sequelize: db,
