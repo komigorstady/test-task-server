@@ -13,12 +13,16 @@ Img.init({
         autoIncrement: true,
         primaryKey: true,
     },
-    fileSizeBytes: {
+    imgName: {
+        type: sequelize_1.DataTypes.STRING(128),
+        allowNull: false,
+    },
+    width: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
     },
-    url: {
-        type: sequelize_1.DataTypes.STRING(128),
+    height: {
+        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
     },
 }, {

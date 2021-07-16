@@ -5,5 +5,8 @@ const db = new sequelize_1.Sequelize(process.env.DB_NAME, process.env.DB_USER, p
     dialect: 'postgres',
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
+    define: {
+        timestamps: false,
+    },
 });
 exports.default = db;

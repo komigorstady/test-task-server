@@ -21,11 +21,9 @@ class ApiService {
                 const result = yield axios_1.default.get('https://random.dog/woof.json');
                 const posts = result.data;
                 const format = path_1.default.extname(posts.url);
-                console.log(format);
                 if (format != '.jpg') {
                     return this.getDogApi();
                 }
-                console.log(posts);
                 return posts;
             }
             catch (err) {
